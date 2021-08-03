@@ -1,0 +1,9 @@
+{
+	"name": "adfdivergencedqtemp",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5f1b1242-cd6c-4c24-8fa3-47a7d672ea62",
+		"tenantId": "674d3e6c-45f7-42e9-938c-fcd01e3ff57c"
+	}
+}
