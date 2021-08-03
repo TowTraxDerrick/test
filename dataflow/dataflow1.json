@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -26,10 +33,24 @@
 						"type": "DatasetReference"
 					},
 					"name": "WriteToSqlServer"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable2",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [],
-			"script": "source(output(\n\t\tInvoiceID as integer,\n\t\tVendorID as integer,\n\t\tInvoiceNumber as string,\n\t\tInvoiceDate as date 'MM/dd/yyyy',\n\t\tInvoiceTotal as float,\n\t\tPaymentTotal as float,\n\t\tCreditTotal as float,\n\t\tTermsID as integer,\n\t\tInvoiceDueDate as date 'MM/dd/yyyy',\n\t\tPaymentDate as date 'MM/dd/yyyy'\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ReadInputFile\nsource(output(\n\t\tVendorID as string,\n\t\tVendorName as string,\n\t\tVendorAddress1 as string,\n\t\tVendorAddress2 as string,\n\t\tVendorCity as string,\n\t\tVendorState as string,\n\t\tVendorZipCode as string,\n\t\tVendorPhone as string,\n\t\tVendorContactLName as string,\n\t\tVendorContactFName as string,\n\t\tDefaultTermsID as string,\n\t\tDefaultAccountNo as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nReadInputFile sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> WriteToSqlServer"
+			"script": "source(output(\n\t\tInvoiceID as integer,\n\t\tVendorID as integer,\n\t\tInvoiceNumber as string,\n\t\tInvoiceDate as date 'MM/dd/yyyy',\n\t\tInvoiceTotal as float,\n\t\tPaymentTotal as float,\n\t\tCreditTotal as float,\n\t\tTermsID as integer,\n\t\tInvoiceDueDate as date 'MM/dd/yyyy',\n\t\tPaymentDate as date 'MM/dd/yyyy'\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ReadInputFile\nsource(output(\n\t\tVendorID as string,\n\t\tVendorName as string,\n\t\tVendorAddress1 as string,\n\t\tVendorAddress2 as string,\n\t\tVendorCity as string,\n\t\tVendorState as string,\n\t\tVendorZipCode as string,\n\t\tVendorPhone as string,\n\t\tVendorContactLName as string,\n\t\tVendorContactFName as string,\n\t\tDefaultTermsID as string,\n\t\tDefaultAccountNo as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tInvoiceID as string,\n\t\tInvoiceSequence as string,\n\t\tAccountNo as string,\n\t\tInvoiceLineItemAmount as string,\n\t\tInvoiceLineItemDescription as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nReadInputFile sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> WriteToSqlServer\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1\nsource2 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink2"
 		}
 	}
 }
